@@ -28,10 +28,14 @@ ARG BUILD_HASH
 WORKDIR /app
 
 # to store git revision in build
-RUN apk add --no-cache git
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories && \
+    apk update && apk add --no-cache git
 
 COPY package.json package-lock.json ./
-RUN npm ci --force
+
+ENV ONNXRUNTIME_NODE_INSTALL_CUDA=skip
+
+RUN npm ci --force --loglevel=info
 
 COPY . .
 ENV APP_BUILD_HASH=${BUILD_HASH}
@@ -75,19 +79,19 @@ ENV OPENAI_API_KEY="" \
 #### Other models #########################################################
 ## whisper TTS model settings ##
 ENV WHISPER_MODEL="base" \
-    WHISPER_MODEL_DIR="/app/backend/data/cache/whisper/models"
+    WHISPER_MODEL_DIR="/app/models/cache/whisper/models"
 
 ## RAG Embedding model settings ##
 ENV RAG_EMBEDDING_MODEL="$USE_EMBEDDING_MODEL_DOCKER" \
     RAG_RERANKING_MODEL="$USE_RERANKING_MODEL_DOCKER" \
-    SENTENCE_TRANSFORMERS_HOME="/app/backend/data/cache/embedding/models"
+    SENTENCE_TRANSFORMERS_HOME="/app/models/cache/embedding/models"
 
 ## Tiktoken model settings ##
 ENV TIKTOKEN_ENCODING_NAME="cl100k_base" \
-    TIKTOKEN_CACHE_DIR="/app/backend/data/cache/tiktoken"
+    TIKTOKEN_CACHE_DIR="/app/models/cache/tiktoken"
 
 ## Hugging Face download cache ##
-ENV HF_HOME="/app/backend/data/cache/embedding/models"
+ENV HF_HOME="/app/models/cache/embedding/models"
 
 ## Torch Extensions ##
 # ENV TORCH_EXTENSIONS_DIR="/.cache/torch_extensions"
@@ -111,13 +115,29 @@ RUN echo -n 00000000-0000-0000-0000-000000000000 > $HOME/.cache/chroma/telemetry
 # Make sure the user has access to the app and root directory
 RUN chown -R $UID:$GID /app $HOME
 
-# Install common system dependencies
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-    git build-essential pandoc gcc netcat-openbsd curl jq \
-    python3-dev \
-    ffmpeg libsm6 libxext6 \
-    && rm -rf /var/lib/apt/lists/*
+RUN if [ "$USE_OLLAMA" = "true" ]; then \
+    apt-get update && \
+    # Install pandoc and netcat
+    apt-get install -y --no-install-recommends git build-essential pandoc netcat-openbsd curl && \
+    apt-get install -y --no-install-recommends gcc python3-dev && \
+    # for RAG OCR
+    apt-get install -y --no-install-recommends ffmpeg libsm6 libxext6 && \
+    # install helper tools
+    apt-get install -y --no-install-recommends curl jq && \
+    # install ollama
+    curl -fsSL https://ollama.com/install.sh | sh && \
+    # cleanup
+    rm -rf /var/lib/apt/lists/*; \
+    else \
+    apt-get update && \
+    # Install pandoc, netcat and gcc
+    apt-get install -y --no-install-recommends git build-essential pandoc gcc netcat-openbsd curl jq && \
+    apt-get install -y --no-install-recommends gcc python3-dev && \
+    # for RAG OCR
+    apt-get install -y --no-install-recommends ffmpeg libsm6 libxext6 && \
+    # cleanup
+    rm -rf /var/lib/apt/lists/*; \
+    fi
 
 # install python dependencies
 COPY --chown=$UID:$GID ./backend/requirements.txt ./requirements.txt
@@ -141,15 +161,7 @@ RUN pip3 install --no-cache-dir uv && \
     else \
     uv pip install --system -r requirements.txt --no-cache-dir; \
     fi; \
-    mkdir -p /app/backend/data && chown -R $UID:$GID /app/backend/data/
-
-# Install Ollama if requested
-RUN if [ "$USE_OLLAMA" = "true" ] && [ "$USE_SLIM" != "true" ]; then \
-    date +%s > /tmp/ollama_build_hash && \
-    echo "Cache broken at timestamp: `cat /tmp/ollama_build_hash`" && \
-    curl -fsSL https://ollama.com/install.sh | sh && \
-    rm -rf /var/lib/apt/lists/*; \
-    fi
+    mkdir -p /app/backend && chown -R $UID:$GID /app/backend
 
 # copy embedding weight from build
 # RUN mkdir -p /root/.cache/chroma/onnx_models/all-MiniLM-L6-v2
