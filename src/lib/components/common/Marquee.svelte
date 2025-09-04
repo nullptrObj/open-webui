@@ -22,7 +22,7 @@
 <div class={className}>
 	<div>
 		{#key idx}
-			<div class=" marquee-item" in:fly={{ y: '30%', duration: 1000 }}>
+			<div class=" marquee-item whitespace-pre-line" in:fly={{ y: '30%', duration: 1000 }}>
 				{words.at(idx)}
 			</div>
 		{/key}
