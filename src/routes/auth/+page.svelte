@@ -361,6 +361,17 @@
 														: $i18n.t('Create Account')}
 											</button>
 
+											<div class="mt-2 text-xs text-center text-gray-500 dark:text-gray-400">
+												{$i18n.t('若需要账户信息，请联系后摩市场团队')}&nbsp;
+												<a href="wenkai.li@houmo.ai" class="underline hover:text-gray-700 dark:hover:text-gray-300">
+													wenkai.li@houmo.ai
+												</a>
+												{$i18n.t(' 或 ')}
+												<a href="BD@houmo.ai" class="underline hover:text-gray-700 dark:hover:text-gray-300">
+													BD@houmo.ai
+												</a>.
+											</div>
+
 											{#if $config?.features.enable_signup && !($config?.onboarding ?? false)}
 												<div class=" mt-4 text-sm text-center">
 													{mode === 'signin'
