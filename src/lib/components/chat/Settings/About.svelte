@@ -60,7 +60,7 @@
 							v{WEBUI_VERSION}
 						</Tooltip>
 
-						{#if $config?.features?.enable_version_update_check}
+						<!-- {#if $config?.features?.enable_version_update_check}
 							<a
 								href="https://github.com/open-webui/open-webui/releases/tag/v{version.latest}"
 								target="_blank"
@@ -71,20 +71,20 @@
 										? `(v${version.latest} ${$i18n.t('available!')})`
 										: $i18n.t('(latest)')}
 							</a>
-						{/if}
+						{/if} -->
 					</div>
 
-					<button
+					<!-- <button
 						class=" underline flex items-center space-x-1 text-xs text-gray-500 dark:text-gray-500"
 						on:click={() => {
 							showChangelog.set(true);
 						}}
 					>
 						<div>{$i18n.t("See what's new")}</div>
-					</button>
+					</button> -->
 				</div>
 
-				{#if $config?.features?.enable_version_update_check}
+				<!-- {#if $config?.features?.enable_version_update_check}
 					<button
 						class=" text-xs px-3 py-1.5 bg-gray-100 hover:bg-gray-200 dark:bg-gray-850 dark:hover:bg-gray-800 transition rounded-lg font-medium"
 						on:click={() => {
@@ -93,7 +93,7 @@
 					>
 						{$i18n.t('Check for updates')}
 					</button>
-				{/if}
+				{/if} -->
 			</div>
 		</div>
 
@@ -112,7 +112,7 @@
 
 		<hr class=" border-gray-100 dark:border-gray-850" />
 
-		{#if $config?.license_metadata}
+		<!-- {#if $config?.license_metadata}
 			<div class="mb-2 text-xs">
 				{#if !$WEBUI_NAME.includes('Open WebUI')}
 					<span class=" text-gray-500 dark:text-gray-300 font-medium">{$WEBUI_NAME}</span> -
@@ -144,63 +144,47 @@
 					/>
 				</a>
 			</div>
-		{/if}
+		{/if} -->
 
-		<div class="mt-2 text-xs text-gray-400 dark:text-gray-500">
+		<!-- <div class="mt-2 text-xs text-gray-400 dark:text-gray-500">
 			Emoji graphics provided by
 			<a href="https://github.com/jdecked/twemoji" target="_blank">Twemoji</a>, licensed under
 			<a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">CC-BY 4.0</a>.
-		</div>
+		</div> -->
 
 		<div>
 			<pre
 				class="text-xs text-gray-400 dark:text-gray-500">Copyright (c) {new Date().getFullYear()} <a
-					href="https://openwebui.com"
+					href="https://houmoai.com"
 					target="_blank"
-					class="underline">Open WebUI (Timothy Jaeryang Baek)</a
+					class="underline">LanyueChat (houmoai.com)</a
 				>
-All rights reserved.
 
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are met:
+LanyueChat 是一个开源的通用型大语言模型（LLM）图形界面平台，旨在为开发者、研究者和企业用户提供简洁、功能丰富的界面，用于交互、测试和部署各种 LLM 模型。它支持多种本地和远程部署方式，并通过模块化架构，方便用户根据自身需求灵活接入不同的模型与服务。
 
-1. Redistributions of source code must retain the above copyright notice, this
-	list of conditions and the following disclaimer.
+系统基于现代前后端分离架构设计，前端采用响应式界面，支持多轮对话、函数调用（Function Calling）、RAG 检索问答、多模型切换、角色扮演等功能，适合从开发调试到业务集成的各类使用场景。后端则集成了 API 代理、中间件、自定义插件系统、SSE 流式响应机制，以及对模型使用统计、访问权限的管理等能力。
 
-2. Redistributions in binary form must reproduce the above copyright notice,
-	this list of conditions and the following disclaimer in the documentation
-	and/or other materials provided with the distribution.
+LanyueChat 支持的模型涵盖主流开源与商业大语言模型，具体包括：
 
-3. Neither the name of the copyright holder nor the names of its
-	contributors may be used to endorse or promote products derived from
-	this software without specific prior written permission.
+1. Qwen 系列（通义千问）：如 qwen2-7b、qwen2.5-7b、qwen2.5-14b、qwen3-8b 等，具备较强中文能力与函数调用能力。
 
-4. Notwithstanding any other provision of this License, and as a material condition of the rights granted herein, licensees are strictly prohibited from altering, removing, obscuring, or replacing any "Open WebUI" branding, including but not limited to the name, logo, or any visual, textual, or symbolic identifiers that distinguish the software and its interfaces, in any deployment or distribution, regardless of the number of users, except as explicitly set forth in Clauses 5 and 6 below.
+2. DeepSeek 系列：如 deepseek-7b、deepseek-14b，擅长代码生成与中英混合任务。
 
-5. The branding restriction enumerated in Clause 4 shall not apply in the following limited circumstances: (i) deployments or distributions where the total number of end users (defined as individual natural persons with direct access to the application) does not exceed fifty (50) within any rolling thirty (30) day period; (ii) cases in which the licensee is an official contributor to the codebase—with a substantive code change successfully merged into the main branch of the official codebase maintained by the copyright holder—who has obtained specific prior written permission for branding adjustment from the copyright holder; or (iii) where the licensee has obtained a duly executed enterprise license expressly permitting such modification. For all other cases, any removal or alteration of the "Open WebUI" branding shall constitute a material breach of license.
+3. 图像生成模型：如 Stable Diffusion XL、SD3，可用于文本生成图像的扩展能力。
 
-6. All code, modifications, or derivative works incorporated into this project prior to the incorporation of this branding clause remain licensed under the BSD 3-Clause License, and prior contributors retain all BSD-3 rights therein; if any such contributor requests the removal of their BSD-3-licensed code, the copyright holder will do so, and any replacement code will be licensed under the project's primary license then in effect. By contributing after this clause's adoption, you agree to the project's Contributor License Agreement (CLA) and to these updated terms for all new contributions.
+用户可通过配置文件或 UI 面板轻松完成模型接入与切换，还支持 API Key 管理、自定义模型参数调整等操作。
 
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
-FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+总之，LanyueChat 兼顾易用性与专业性，是一个集模型接入、界面交互、扩展开发于一体的强大平台，广泛适用于 AI 应用的研发、测试与部署。
 </pre>
 		</div>
 
-		<div class="mt-2 text-xs text-gray-400 dark:text-gray-500">
+		<!-- <div class="mt-2 text-xs text-gray-400 dark:text-gray-500">
 			{$i18n.t('Created by')}
 			<a
 				class=" text-gray-500 dark:text-gray-300 font-medium"
 				href="https://github.com/tjbck"
 				target="_blank">Timothy J. Baek</a
 			>
-		</div>
+		</div> -->
 	</div>
 </div>
