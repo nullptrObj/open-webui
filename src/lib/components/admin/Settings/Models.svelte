@@ -328,7 +328,7 @@
 						>
 							<div class=" self-center w-8">
 								<div
-									class=" rounded-full object-cover {(model?.is_active ?? true)
+									class=" rounded-lg object-cover {(model?.is_active ?? true)
 										? ''
 										: 'opacity-50 dark:opacity-50'} "
 								>

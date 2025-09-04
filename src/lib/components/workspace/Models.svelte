@@ -328,7 +328,7 @@
 				<div class="flex gap-4 mt-1 mb-0.5">
 					<div class=" w-10">
 						<div
-							class=" rounded-full object-cover {model.is_active
+							class=" rounded-lg object-cover {model.is_active
 								? ''
 								: 'opacity-50 dark:opacity-50'} "
 						>
