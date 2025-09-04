@@ -1070,31 +1070,24 @@ except Exception as e:
 if default_prompt_suggestions == []:
     default_prompt_suggestions = [
         {
-            "title": ["Help me study", "vocabulary for a college entrance exam"],
-            "content": "Help me study vocabulary: write a sentence for me to fill in the blank, and I'll try to pick the correct option.",
+            "title": ["帮我了解", "什么是存算一体"],
+            "content": "帮我了解什么是存算一体。",
         },
         {
-            "title": ["Give me ideas", "for what to do with my kids' art"],
-            "content": "What are 5 creative things I could do with my kids' art? I don't want to throw them away, but it's also so much clutter.",
+            "title": ["给我一些建议", "如何系统学习存算一体技术"],
+            "content": "给我一些如何系统学习存算一体技术的建议。",
         },
         {
-            "title": ["Tell me a fun fact", "about the Roman Empire"],
-            "content": "Tell me a random fun fact about the Roman Empire",
+            "title": ["介绍一下现状", "我国国产NPU、终端与AI模型的发展"],
+            "content": "请介绍一下我国在国产NPU、终端设备及AI模型协同发展方面的现状与趋势。",
         },
         {
-            "title": ["Show me a code snippet", "of a website's sticky header"],
-            "content": "Show me a code snippet of a website's sticky header in CSS and JavaScript.",
+            "title": ["帮我策划活动", "生态伙伴招募方案"],
+            "content": "我是一家国产NPU企业的市场策划人员，公司计划发起一场生态伙伴招募活动，请帮我撰写一份完整的活动策划方案。",
         },
         {
-            "title": [
-                "Explain options trading",
-                "if I'm familiar with buying and selling stocks",
-            ],
-            "content": "Explain options trading in simple terms if I'm familiar with buying and selling stocks.",
-        },
-        {
-            "title": ["Overcome procrastination", "give me tips"],
-            "content": "Could you start by asking me about instances when I procrastinate the most and then give me some suggestions to overcome it?",
+            "title": ["撰写宣传文案", "为后摩智能M30芯片做推广"],
+            "content": "你是一位资深的新媒体运营人员，请为后摩智能的边端大模型芯片M30撰写一段200-500字的宣传文案，重点突出其高能效、低时延、算力强大和高性价比的特点。",
         },
     ]
 
