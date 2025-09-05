@@ -3,14 +3,11 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: harbor.houmo.ai/application_software/lanyuechat:v1.2.0-daily20250903
+    image: harbor.houmo.ai/application_software/lanyuechat:v1.2.0
     container_name: lanyuechat
     volumes:
       - ./data/backend:/app/backend/data
-    ports:
-      - 3000:8080
-    # env_file:
-    #   - .env
-    extra_hosts:
-      - host.docker.internal:host-gateway
+    env_file:
+      - .env
+    network_mode: host
     restart: unless-stopped
